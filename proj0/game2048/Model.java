@@ -116,37 +116,37 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
         for(int col = 0; col < board.size(); col++) {
-            for(int row = board.size() - 2; row >= 0; row--) {
+            for (int row = board.size() - 2; row >= 0; row--) {
                 int goal_row = 0;
                 Tile t = board.tile(col, row);
-                if(t != null){
-                    for(int row_before = row + 1; row_before < board.size(); row_before++) {
-                        if(tile(col, row_before) == null) {
-                            goal_row ++;
+                if (t != null) {
+                    for (int row_before = row + 1; row_before < board.size(); row_before++) {
+                        if (tile(col, row_before) == null) {
+                            goal_row++;
                         }
                     }
                     board.move(col, row + goal_row, t);
                     changed = true;
                 }
             }
-            for(int row = board.size()-2; row >= 0; row--) {
+            for (int row = board.size() - 2; row >= 0; row--) {
                 Tile t = board.tile(col, row);
-                if(t != null){
+                if (t != null) {
                     Tile next_t = board.tile(col, row + 1);
-                    if(next_t != null && t.value() == next_t.value()) {
+                    if (next_t != null && t.value() == next_t.value()) {
                         board.move(col, row + 1, t);
                         changed = true;
                         score += 2 * t.value();
                     }
                 }
             }
-            for(int row = board.size() - 2; row >= 0; row--) {
+            for (int row = board.size() - 2; row >= 0; row--) {
                 int goal_row = 0;
                 Tile t = board.tile(col, row);
-                if(t != null){
-                    for(int row_before = row + 1; row_before < board.size(); row_before++) {
-                        if(tile(col, row_before) == null) {
-                            goal_row ++;
+                if (t != null) {
+                    for (int row_before = row + 1; row_before < board.size(); row_before++) {
+                        if (tile(col, row_before) == null) {
+                            goal_row++;
                         }
                     }
                     board.move(col, row + goal_row, t);
@@ -223,9 +223,9 @@ public class Model extends Observable {
             for(int row = 0; row < b.size(); row++) {
                 if(b.tile(col, row) == null)
                     return true;
-                if(row < b.size() - 1 && b.tile(col, row).value() == b.tile(col, row + 1).value())
+                if(row < b.size() - 1 && b.tile(col, row + 1) != null && b.tile(col, row).value() == b.tile(col, row + 1).value())
                     return true;
-                if(col < b.size() - 1 && b.tile(col, row).value() == b.tile(col + 1, row).value())
+                if(col < b.size() - 1 && b.tile(col + 1, row) != null && b.tile(col, row).value() == b.tile(col + 1, row).value())
                     return true;
             }
         }
