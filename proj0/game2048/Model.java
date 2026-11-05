@@ -117,22 +117,40 @@ public class Model extends Observable {
         // changed local variable to true.
         for(int col = 0; col < board.size(); col++) {
             for(int row = board.size() - 2; row >= 0; row--) {
+                int goal_row = 0;
                 Tile t = board.tile(col, row);
-                if(t == null)
-                    continue;
-                for(int i = row + 1; i < board.size(); i++) {
-                    Tile next_t = board.tile(col, i);
-                    if(next_t == null)
-                        continue;
-                    if(next_t.value() == t.value()){
-                        next_t.merge(col, row + 1, t);
-                        boolean moved = board.move(col, row, t);
-                        score += 2 * t.value();
-                        changed = true;
-                    }else{
-                        boolean moved = board.move(col, row, t);
-                        changed = true;
+                if(t != null){
+                    for(int row_before = row + 1; row_before < board.size(); row_before++) {
+                        if(tile(col, row_before) == null) {
+                            goal_row ++;
+                        }
                     }
+                    board.move(col, row + goal_row, t);
+                    changed = true;
+                }
+            }
+            for(int row = board.size()-2; row >= 0; row--) {
+                Tile t = board.tile(col, row);
+                if(t != null){
+                    Tile next_t = board.tile(col, row + 1);
+                    if(next_t != null && t.value() == next_t.value()) {
+                        board.move(col, row + 1, t);
+                        changed = true;
+                        score += 2 * t.value();
+                    }
+                }
+            }
+            for(int row = board.size() - 2; row >= 0; row--) {
+                int goal_row = 0;
+                Tile t = board.tile(col, row);
+                if(t != null){
+                    for(int row_before = row + 1; row_before < board.size(); row_before++) {
+                        if(tile(col, row_before) == null) {
+                            goal_row ++;
+                        }
+                    }
+                    board.move(col, row + goal_row, t);
+                    changed = true;
                 }
             }
         }
