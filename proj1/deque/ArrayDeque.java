@@ -77,6 +77,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             first -= 1;
         }
         length -= 1;
+        if(4 * length < size){
+            resize(size / 2);
+        }
         return temp;
     }
 
@@ -100,7 +103,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T get(int index) {
-        if(first <= last){}
+        if(index < 0 || index >= length) {
+            return null;
+        }
+        int position = (first + index) % size;
+        return array[position];
     }
 
     @Override
@@ -111,7 +118,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
             System.out.println();
         }else{
-            for(int i = first; i <= size; i++){
+            for(int i = first; i < size; i++){
                 System.out.print(array[i] + " ");
             }
             for(int i = 0; i <= last; i++){
@@ -129,7 +136,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
         }else{
             int j = 0;
-            for(int i = first; i <= size; i++, j++){
+            for(int i = first; i < size; i++, j++){
                 newArray[j] = array[i];
             }
             for(int i = 0; i <= last; i++, j++){
