@@ -76,4 +76,5 @@ public class ArrayDequeTest {
             assertEquals(i, a);
         }
     }
+
 }

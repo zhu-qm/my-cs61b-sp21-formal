@@ -18,11 +18,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return length == 0;
-    }
-
-    @Override
     public int size() {
         return length;
     }
@@ -126,6 +121,49 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public Iterator<T> iterator(){
+        return new ArrayListIterator();
+    }
+
+    private class ArrayListIterator implements Iterator<T>{
+        private int index;
+
+        public ArrayListIterator(){
+            index = 0;
+        }
+
+        public boolean hasNext(){
+            return index < length;
+        }
+
+        public T next(){
+            T ret = get(index);
+            index += 1;
+            return ret;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof ArrayDeque other_array) {
+            if (other_array == this) {
+                return true;
+            }
+            if(this.size() != other_array.size()) {
+                return false;
+            }
+            int a = length;
+            while (--a >= 0) {
+                if (this.get(a) != other_array.get(a)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     private void resize(int newSize) {

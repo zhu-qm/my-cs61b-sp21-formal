@@ -1,6 +1,5 @@
 package deque;
 
-import org.w3c.dom.Node;
 import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
@@ -24,11 +23,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public int size() {
         return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -105,16 +99,44 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        f;
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+        private Node p;
+
+        public LinkedListIterator() {
+            p = sentinel.next;
+        }
+
+        public boolean hasNext() {
+            return p != sentinel;
+        }
+
+        public T next() {
+            T return_value = p.elem;
+            p = p.next;
+            return return_value;
+        }
     }
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof LinkedListDeque) {}
-            return false;
-        while(this.size != 0)
-        {
-            Node p = sentinel.next;
+        if (o instanceof LinkedListDeque other_linked) {
+            if (other_linked == this) {
+                return true;
+            }
+            if (other_linked.size() != size) {
+                return false;
+            }
+            int a = this.size();
+            while(--a >= 0){
+                if(other_linked.get(a) != this.get(a)){
+                    return false;
+                }
+            }
+            return true;
         }
+        return false;
     }
 }
