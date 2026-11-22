@@ -24,7 +24,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addFirst(T item) {
-        if (length == size) {
+        if (length == size - 1) {
             resize(2*size);
         }
         if (isEmpty()) {
@@ -43,7 +43,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addLast(T item) {
-        if (length == size) {
+        if (length == size - 1) {
             resize(2*size);
         }
         if(isEmpty()) {
@@ -69,10 +69,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if(first == size - 1){
             first = 0;
         }else{
-            first -= 1;
+            first += 1;
         }
         length -= 1;
-        if(4 * length < size){
+        if(size > 8 && 4 * length < size){
             resize(size / 2);
         }
         return temp;
@@ -90,7 +90,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             last -= 1;
         }
         length -= 1;
-        if(4 * length < size){
+        if(size > 8 && 4 * length < size){
             resize(size / 2);
         }
         return temp;
@@ -148,7 +148,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o){
-        if(o instanceof ArrayDeque other_array) {
+        if(o instanceof Deque other_array) {
             if (other_array == this) {
                 return true;
             }
@@ -182,5 +182,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
         }
         array = newArray;
+        first = 0;
+        last = length - 1;
+        size = newSize;
     }
 }

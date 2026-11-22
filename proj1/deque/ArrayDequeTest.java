@@ -77,4 +77,33 @@ public class ArrayDequeTest {
         }
     }
 
+    @Test
+    public void longListTest2(){
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        for(int i = 0; i < 100; i+=2){
+            q.addLast(i);
+            q.addFirst(i + 1);
+        }
+        assertEquals(100, q.size());
+        for(int i = 0; i < 20; i++){
+            q.removeFirst();
+        }
+        int a = q.get(0);
+        assertEquals(59, a);
+    }
+
+    @Test
+    public void equalListTest(){
+        ArrayDeque<Integer> a = new ArrayDeque<>();
+        ArrayDeque<Integer> b = new ArrayDeque<>();
+        ArrayDeque<Integer> c = new ArrayDeque<>();
+        for(int i = 0; i < 50; i++){
+            a.addLast(i);
+            c.addLast(i);
+        }
+        b = a;
+        assertTrue(a.equals(b));
+        assertTrue(a.equals(c));
+    }
+
 }

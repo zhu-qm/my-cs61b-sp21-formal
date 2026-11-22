@@ -31,6 +31,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         p.elem = item;
         p.prev = sentinel;
         p.next = sentinel.next;
+        p.next.prev = p;
         sentinel.next = p;
         size += 1;
     }
@@ -41,22 +42,31 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         p.elem = item;
         p.next = sentinel;
         p.prev = sentinel.prev;
+        p.prev.next = p;
         sentinel.prev = p;
         size += 1;
     }
 
     @Override
     public T removeFirst() {
+        if(sentinel.next == sentinel) {
+            return null;
+        }
         Node p = sentinel.next;
         sentinel.next = p.next;
+        p.next.prev = sentinel;
         size -= 1;
         return p.elem;
     }
 
     @Override
     public T removeLast() {
+        if(sentinel.prev == sentinel) {
+            return null;
+        }
         Node p = sentinel.prev;
         sentinel.prev = p.prev;
+        p.prev.next = sentinel;
         size -= 1;
         return p.elem;
     }
@@ -122,7 +132,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof LinkedListDeque other_linked) {
+        if (o instanceof Deque other_linked) {
             if (other_linked == this) {
                 return true;
             }
