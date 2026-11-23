@@ -147,7 +147,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o){//not allowed in autograder because this kind of expression hasn't appear in 2021
         if(o instanceof Deque other_array) {
             if (other_array == this) {
                 return true;
